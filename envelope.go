@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"encoding/json"
 	"github.com/bradfitz/go-smtpd/smtpd"
 )
 
@@ -14,7 +15,6 @@ type Envelope struct {
 }
 
 func (e *Envelope) AddRecipient(rcpt smtpd.MailAddress) error {
-	log.Println("AddRecipient")
 	e.To = rcpt.Email()
 	return nil
 }
@@ -29,7 +29,13 @@ func  (e *Envelope) Write(line []byte) error {
 }
 
 func  (e *Envelope) Close() error {
-	log.Println("Close", e)
+	data, err := json.Marshal(e)
+
+	if err != nil {
+		log.Println("ERROR:", err)
+	}
+
+	log.Println("MSG:", string(data))
 	return nil
 }
 

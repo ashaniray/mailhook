@@ -9,6 +9,8 @@ var (
 	smtpPort = flag.Int("p", 25, "smpt port")
 )
 
+var MailStore = NewMemStore()
+
 func main() {
 	flag.Parse()
 
