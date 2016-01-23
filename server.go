@@ -6,30 +6,6 @@ import (
 	"github.com/bradfitz/go-smtpd/smtpd"
 )
 
-type Envelope struct {
-	Rcpts []string
-	Message string
-}
-
-func (e *Envelope) AddRecipient(rcpt smtpd.MailAddress) error {
-	log.Println("AddRecipient")
-	return nil
-}
-
-func  (e *Envelope) BeginData() error {
-	log.Println("BeginData")
-	return nil
-}
-
-func  (e *Envelope) Write(line []byte) error {
-	log.Println("Write")
-	return nil
-}
-
-func  (e *Envelope) Close() error {
-	log.Println("Close")
-	return nil
-}
 
 func newMail(c smtpd.Connection, from smtpd.MailAddress) (smtpd.Envelope, error) {
 	log.Println("NEW MAIL", from)
