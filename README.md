@@ -19,6 +19,22 @@ and run `go build` to create the **mailhook** binary. Now place the mailhook bin
 
 # Usage
 
+To run mailhook (make sure mailhook is in $PATH) simply execute the `mailhook command`. For example to start mailhook at port 2025
+execute the following command.
+
+```
+$ ./mailhook -p 2025
+2016/01/25 02:48:56 starting SMTP endpoint on 0.0.0.0:2025
+2016/01/25 02:48:56 starting filter ...
+2016/01/25 02:48:56 starting admin web interface on 0.0.0.0:8080
+2016/01/25 02:48:56 starting dispatcher
+
+```
+
+By default mailhook start the SMTP interface on port 25 and the admin interface on port 8080, however it can be run to listen
+on other ports using the appropriate flag. The exhaustive list of commandline flags are listed below.
+
+
 ```
 $ mailhook -h
 Usage of mailhook:
@@ -36,6 +52,26 @@ Usage of mailhook:
 ```
 
 # Configuring Mailhook
+
+After running mailhook using the command described in previous section. You can configure mailhook using its web based
+admin interface. If mailhook is run with its default flags, the admin interface will listen on port 8080. Open a web
+browser and point http://localhost:8080 to access the admin interface. 
+
+The following screen shows the admin UI when opened for the first time after installation.
+
+![](https://github.com/gophergala2016/mailhook/blob/master/screenshots/home.png)
+
+Now click on the "Add Rule" button to start ading rules and endpoints. the image below shows the screen to create 
+rules.
+
+
+![](https://github.com/gophergala2016/mailhook/blob/master/screenshots/create.png)
+
+A sample rule with endpoints configures is shown in the following screenshot.
+
+![](https://github.com/gophergala2016/mailhook/blob/master/screenshots/sample.png)
+
+for more screenshots see [here](https://github.com/gophergala2016/mailhook/blob/master/screenshots/).
 
 # Writing Mailhook rules
 Mailhook can be customized by javascript based rules dispatch webhooks. A sample rule is shown below.
