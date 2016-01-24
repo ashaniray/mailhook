@@ -7,7 +7,7 @@ can be highly customized using its web based admin interface and Javascript base
 
 Before trying to install mailhook, make sure you have installed a recent version of [Go](https://golang.org/).
 
-To install go just run the following command.
+To install mailhook just run the following command.
 
 ``
 $ go get github.com/gophergala2016/mailhook
@@ -46,7 +46,7 @@ rule(function(mail) {
 	return true;
 });
 ```
-this is the simples possible rule which always evaluates to `true`. If a rule evaluates to `true` mailhook dispatches the 
+this is the simplest possible rule which always evaluates to `true`. If a rule evaluates to `true` mailhook dispatches the 
 webhooks configured with that rule. If the rule function evaluates to `false` mailhook ignores the dispatching of the
 webhooks.
 
@@ -61,6 +61,7 @@ is of the following form.
 
 }
 ```
+
 
 
 
