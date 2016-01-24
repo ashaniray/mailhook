@@ -62,6 +62,25 @@ is of the following form.
 }
 ```
 
+thus to access the various attributes of the mail object use `object.attribute` syntax. Make sure you access the mail attributes
+with capitalized attribute names e.g: `mail.From`.
 
+The following example script logs the attribute values of the mail object and returns false.
+
+```
+rule(function(mail) {
+
+	console.log(mail.To);
+	console.log(mail.From);
+	console.log(mail.Body);
+	return false;
+});
+
+```
+
+
+# License
+
+MIT License. Click [here](https://raw.githubusercontent.com/gophergala2016/mailhook/master/LICENSE) to view the license.
 
 
