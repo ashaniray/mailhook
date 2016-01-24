@@ -26,6 +26,8 @@ func applyRule(rule *Rule, key string, fout chan Packet) {
 	msg := lookupMessage(key)
 	if rule.Evaluate(msg) {
 		fout <- *NewPacket(key, rule.Endpoints)
+	} else {
+		log.Println("Rule evaluated to false for", rule.Title, "ignoring", key)
 	}
 }
 

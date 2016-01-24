@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"encoding/gob"
 	"github.com/pborman/uuid"
+	"github.com/robertkrimen/otto"
+	"log"
 )
 
 type Rule struct {
@@ -50,6 +52,36 @@ func (r *Rule) ToGob() []byte {
 	return buff.Bytes()
 }
 
-func (r *Rule) Evaluate(m *Message) bool {
-	return true
+func (r *Rule) Evaluate(payload *Message) bool {
+	result, err := evaluateRule(r.Script, payload)
+	if err != nil {
+		log.Println("ERROR:", err)
+		return false
+	}
+
+	return result
+}
+
+func evaluateRule(src string, payload *Message) (bool, error) {
+	js := otto.New()
+	var ruleFunc otto.Value
+	js.Set("rule", func(call otto.FunctionCall) otto.Value {
+		ruleFunc = call.Argument(0)
+		return otto.UndefinedValue()
+	})
+
+	js.Run(src)
+	arg, err := js.ToValue(payload)
+
+	if err != nil {
+		return false, err
+	}
+
+	ret, err := ruleFunc.Call(otto.NullValue(), arg)
+
+	if err != nil {
+		return false, err
+	}
+
+	return ret.ToBoolean()
 }

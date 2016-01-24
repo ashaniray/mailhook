@@ -15,9 +15,7 @@ var assetMap = map[string]string{
 	".woff":  "font/opentype",
 	".eot":   "font/opentype",
 	".ttf":   "font/opentype",
-
 }
-
 
 func AssetHandler(w http.ResponseWriter, r *http.Request) {
 	asset := r.URL.Path[1:]
