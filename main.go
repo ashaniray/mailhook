@@ -6,9 +6,11 @@ import (
 )
 
 var (
-	smtpHost = flag.String("s", "0.0.0.0", "smtp bind address.")
-	smtpPort = flag.Int("p", 25, "smpt port.")
+	smtpHost = flag.String("s", "0.0.0.0", "smtp server bind address.")
+	smtpPort = flag.Int("p", 25, "smpt server port.")
 	dbFile   = flag.String("d", "mailhook.db", "specify rules database file.")
+	adminHost = flag.String("a", "0.0.0.0", "web server bind address.")
+	adminPort = flag.Int("q", 8080, "webserver port.")
 )
 
 var MailStore = NewMemStore()
@@ -52,5 +54,7 @@ func main() {
 
 	smtpOut := StartSMTPEndpoint(*smtpHost, *smtpPort)
 	filterOut := StartFilter(smtpOut)
-	StartDispatcher(filterOut)
+	go StartDispatcher(filterOut)
+
+	StartWebInterface(*adminHost, *adminPort)
 }
