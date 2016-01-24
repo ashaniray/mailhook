@@ -43,4 +43,3 @@ func onNewMail(c smtpd.Connection, from smtpd.MailAddress) (smtpd.Envelope, erro
 	myMessage.From = from.Email()
 	return &Envelope{new(smtpd.BasicEnvelope), myMessage}, nil
 }
-

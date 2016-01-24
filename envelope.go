@@ -1,12 +1,11 @@
 package main
 
 import (
-	"github.com/bradfitz/go-smtpd/smtpd"
 	"encoding/json"
+	"github.com/bradfitz/go-smtpd/smtpd"
 	"log"
 	"strings"
 )
-
 
 type Message struct {
 	From string
@@ -42,4 +41,3 @@ func (e *Envelope) Close() error {
 	globalOut <- key
 	return nil
 }
-

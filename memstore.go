@@ -1,14 +1,14 @@
 package main
 
 import (
-	"sync"
-	"fmt"
 	"crypto/md5"
+	"fmt"
+	"sync"
 )
 
 type MemStore struct {
 	Storage map[string]string
-	Guard sync.Mutex
+	Guard   sync.Mutex
 }
 
 func NewMemStore() *MemStore {
@@ -17,7 +17,7 @@ func NewMemStore() *MemStore {
 	return s
 }
 
-func (s *MemStore) Save(content string)  string {
+func (s *MemStore) Save(content string) string {
 	s.Guard.Lock()
 	defer s.Guard.Unlock()
 
@@ -26,7 +26,6 @@ func (s *MemStore) Save(content string)  string {
 
 	return key
 }
-
 
 func (s *MemStore) Get(key string) string {
 	data, ok := s.Storage[key]
