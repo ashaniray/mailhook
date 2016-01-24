@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/pborman/uuid"
 	"bytes"
 	"encoding/gob"
+	"github.com/pborman/uuid"
 )
 
 type Rule struct {
@@ -48,4 +48,9 @@ func (r *Rule) ToGob() []byte {
 	}
 
 	return buff.Bytes()
+}
+
+
+func (r *Rule) Evaluate(m *Message ) bool{
+	return true
 }

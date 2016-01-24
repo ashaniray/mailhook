@@ -4,7 +4,7 @@ import (
 	"log"
 )
 
-func StartDispatcher(dispIn chan string) {
+func StartDispatcher(dispIn chan Packet) {
 	log.Println("starting dispatcher")
 
 	for {

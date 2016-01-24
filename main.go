@@ -20,10 +20,10 @@ func rule(data) {
 `
 
 func DummyRules() {
-	r1 := NewRule("rule1", defaultJs, []string{ "http://ep1.com" , "http://epr2.com"} )
-	r2 := NewRule("rule2", defaultJs, []string{ "http://ep1.com" , "http://epr2.com"} )
-	r3 := NewRule("rule3", defaultJs, []string{ "http://ep1.com" , "http://epr2.com"} )
-	r4 := NewRule("rule4", defaultJs, []string{ "http://ep1.com" , "http://epr2.com"} )
+	r1 := NewRule("rule1", defaultJs, []string{"http://ep1.com", "http://epr2.com"})
+	r2 := NewRule("rule2", defaultJs, []string{"http://ep1.com", "http://epr2.com"})
+	r3 := NewRule("rule3", defaultJs, []string{"http://ep1.com", "http://epr2.com"})
+	r4 := NewRule("rule4", defaultJs, []string{"http://ep1.com", "http://epr2.com"})
 
 	DiskStore.SaveRule(r1)
 	DiskStore.SaveRule(r2)
