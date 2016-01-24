@@ -15,12 +15,6 @@ var (
 
 var MailStore = NewMemStore()
 
-const defaultJs = `
-func rule(data) {
-	return true;
-}
-`
-
 func DummyRules() {
 	r1 := NewRule("rule1", defaultJs, []string{"http://ep1.com", "http://epr2.com"})
 	r2 := NewRule("rule2", defaultJs, []string{"http://ep1.com", "http://epr2.com"})

@@ -45,7 +45,20 @@ func (s *Store) SaveRule(r *Rule) error {
 }
 
 func (s *Store) GetRule(id string) (*Rule, error) {
-	return nil, nil
+	ret := make([]byte, 0)
+	err := s.DB.View(func(tx *bolt.Tx) error {
+		bucket := tx.Bucket(RuleBucket())
+		if bucket == nil {
+			return errors.New("Bucket not found")
+		}
+
+		val := bucket.Get([]byte(id))
+		ret = make([]byte, len(val))
+		copy(ret, val)
+		return nil
+	})
+	r, err := NewRuleFromBytes(ret)
+	return r, err
 }
 
 func (s *Store) GetAllRules() ([]*Rule, error) {
@@ -75,5 +88,8 @@ func (s *Store) GetAllRules() ([]*Rule, error) {
 }
 
 func (s *Store) DeleteRule(id string) error {
-	return nil
+	err := s.DB.Update(func(tx *bolt.Tx) error {
+		return tx.Bucket(RuleBucket()).Delete([]byte(id))
+	})
+	return err
 }

@@ -10,6 +10,7 @@ func StartWebInterface(host string, port int) {
 	addr := fmt.Sprintf("%s:%d", host, port)
 	log.Println("starting admin web interface on", addr)
 
+	http.HandleFunc("/assets/", AssetHandler)
 	http.HandleFunc("/", AdminHandler)
 	http.HandleFunc("/new/", NewRuleHandler)
 	http.HandleFunc("/create/", CreateRuleHandler)
