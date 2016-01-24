@@ -6,9 +6,9 @@ import (
 )
 
 var (
-	smtpHost = flag.String("s", "0.0.0.0", "smtp server bind address.")
-	smtpPort = flag.Int("p", 25, "smpt server port.")
-	dbFile   = flag.String("d", "mailhook.db", "specify rules database file.")
+	smtpHost  = flag.String("s", "0.0.0.0", "smtp server bind address.")
+	smtpPort  = flag.Int("p", 25, "smpt server port.")
+	dbFile    = flag.String("d", "mailhook.db", "specify rules database file.")
 	adminHost = flag.String("a", "0.0.0.0", "web server bind address.")
 	adminPort = flag.Int("q", 8080, "webserver port.")
 )

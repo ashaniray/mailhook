@@ -11,7 +11,7 @@ var myMessage Message
 var globalOut = make(chan string)
 
 func StartSMTPEndpoint(host string, port int) chan string {
-	log.Printf("starting SMTP endpoint on %s:%p", host, port) 
+	log.Printf("starting SMTP endpoint on %s:%p", host, port)
 	smtpOut := make(chan string)
 
 	go func() {
