@@ -50,8 +50,6 @@ func main() {
 		return
 	}
 
-	DummyRules()
-
 	smtpOut := StartSMTPEndpoint(*smtpHost, *smtpPort)
 	filterOut := StartFilter(smtpOut)
 	StartDispatcher(filterOut)

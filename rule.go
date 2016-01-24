@@ -50,7 +50,6 @@ func (r *Rule) ToGob() []byte {
 	return buff.Bytes()
 }
 
-
-func (r *Rule) Evaluate(m *Message ) bool{
+func (r *Rule) Evaluate(m *Message) bool {
 	return true
 }
