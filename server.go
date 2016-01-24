@@ -1,40 +1,46 @@
 package main
 
 import (
-	"log"
-	"fmt"
 	"github.com/bradfitz/go-smtpd/smtpd"
+	"log"
+	"strconv"
 )
 
-var chIn = make(chan string)
+var myMessage Message
 
-func newMail(c smtpd.Connection, from smtpd.MailAddress) (smtpd.Envelope, error) {
-	log.Println("NEW MAIL", from)
-	return new(Envelope), nil
-}
-
-func startServer(host string, port int) {
-	addr := fmt.Sprintf("%s:%d", host, port)
-	log.Println("Starting smtp endpoint on", addr)
-
-	s := &smtpd.Server{Addr: addr, OnNewMail: newMail }
-	err := s.ListenAndServe()
-
-	if err != nil {
-		log.Println("ERROR:", err)
-	}
-
-}
-
+var globalOut = make(chan string)
 
 func StartSMTPEndpoint(host string, port int) chan string {
 	smtpOut := make(chan string)
 
-	go startServer(host, port)
 	go func() {
-		key := <-chIn
-		smtpOut <- key
+		for {
+			out := <-globalOut
+			smtpOut <- out
+		}
+	}()
+
+	go func() {
+		s := &smtpd.Server{
+			Addr:      ":" + strconv.Itoa(port),
+			Hostname:  host,
+			OnNewMail: onNewMail,
+		}
+
+		// entry point to the SMTP endpoint
+		err := s.ListenAndServe()
+		if err != nil {
+			log.Fatalf("ListenAndServe: %v", err)
+		}
+
 	}()
 
 	return smtpOut
 }
+
+func onNewMail(c smtpd.Connection, from smtpd.MailAddress) (smtpd.Envelope, error) {
+	log.Printf("New mail received from %q", from)
+	myMessage.From = from.Email()
+	return &Envelope{new(smtpd.BasicEnvelope), myMessage}, nil
+}
+

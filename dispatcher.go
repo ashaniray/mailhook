@@ -7,7 +7,8 @@ import (
 func StartDispatcher(dispIn chan string) {
 	log.Println("starting dispatcher")
 
-	data := <- dispIn
-
-	log.Println(data)
+	for {
+		key := <-dispIn
+		log.Println("DISPATCHER:", key)
+	}
 }

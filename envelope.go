@@ -1,41 +1,45 @@
 package main
 
 import (
-	"log"
-	"encoding/json"
 	"github.com/bradfitz/go-smtpd/smtpd"
+	"encoding/json"
+	"log"
+	"strings"
 )
 
 
+type Message struct {
+	From string
+	To   []string
+	Body string
+}
+
 type Envelope struct {
-	To      string
-	From    string
-	Subject string
-	Body    string
+	*smtpd.BasicEnvelope
+	msg Message
 }
 
 func (e *Envelope) AddRecipient(rcpt smtpd.MailAddress) error {
-	e.To = rcpt.Email()
+	e.msg.To = append(e.msg.To, rcpt.Email())
+	return e.BasicEnvelope.AddRecipient(rcpt)
+}
+
+func (e *Envelope) Write(line []byte) error {
+	str := strings.Replace(string(line), "\n", " ", -1)
+	str = strings.Replace(str, "\r", " ", -1)
+	e.msg.Body += str
 	return nil
 }
 
-func  (e *Envelope) BeginData() error {
-	return nil
-}
-
-func  (e *Envelope) Write(line []byte) error {
-	e.Body += string(line)
-	return nil
-}
-
-func  (e *Envelope) Close() error {
-	data, err := json.Marshal(e)
-
+func (e *Envelope) Close() error {
+	messageInJson, err := json.Marshal(e.msg)
 	if err != nil {
-		log.Println("ERROR:", err)
+		log.Printf("Error occured while converting to json", err)
+		return err
 	}
-
-	log.Println("MSG:", string(data))
+	key := MailStore.Save(string(messageInJson))
+	log.Printf("The message received : %q", string(messageInJson))
+	globalOut <- key
 	return nil
 }
 
